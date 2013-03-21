@@ -1,0 +1,229 @@
+name: dynmap
+main: org.dynmap.bukkitbridge.DynmapCBBridgePlugin
+version: "${project.version}-${BUILD_NUMBER}"
+authors: [mikeprimm]
+softdepend: [ Permissions, PermissionEx, bPermissions, PermissionsBukkit ]
+           
+permissions:
+  dynmap.*:
+    description: Gives access to all dynmap functions
+    children:
+      dynmap.render: true
+      dynmap.show.self: true
+      dynmap.show.others: true
+      dynmap.hide.self: true
+      dynmap.hide.others: true
+      dynmap.fullrender: true
+      dynmap.radiusrender: true
+      dynmap.updaterender: true
+      dynmap.cancelrender: true
+      dynmap.reload: true
+      dynmap.stats: true
+      dynmap.resetstats: true
+      dynmap.sendtoweb: true
+      dynmap.purgequeue: true
+      dynmap.ids-for-ip: true
+      dynmap.ips-for-id: true
+      dynmap.webregister: true
+      dynmap.webregister.other: true
+      dynmap.pause: true
+      dynmap.marker.add: true
+      dynmap.marker.update: true
+      dynmap.marker.movehere: true
+      dynmap.marker.delete: true
+      dynmap.marker.list: true
+      dynmap.marker.icons: true
+      dynmap.marker.sign: true
+      dynmap.marker.addset: true
+      dynmap.marker.updateset: true
+      dynmap.marker.deleteset: true
+      dynmap.marker.listsets: true
+      dynmap.marker.addicon: true
+      dynmap.marker.updateicon: true
+      dynmap.marker.deleteicon: true
+      dynmap.marker.addarea: true
+      dynmap.marker.updatearea: true
+      dynmap.marker.listareas: true
+      dynmap.marker.deletearea: true
+      dynmap.marker.addcircle: true
+      dynmap.marker.updatecircle: true
+      dynmap.marker.listcircles: true
+      dynmap.marker.deletecircle: true
+      dynmap.dmap.worldlist: true
+      dynmap.dmap.worldset: true
+      dynmap.dmap.worldreset: true
+      dynmap.dmap.mapdelete: true
+      dynmap.dmap.mapset: true
+      dynmap.dmap.mapadd: true
+      dynmap.dmap.perspectivelist: true
+      dynmap.dmap.shaderlist: true
+      dynmap.dmap.lightinglist: true
+      dynmap.playermarkers.seeall: true
+  dynmap.render:
+    description: Allows /dynmap render command
+    default: true
+  dynmap.show.self:
+    description: Allows /dynmap show (on self)
+    default: true
+  dynmap.show.others:
+    description: Allows /dynmap show <player>
+    default: op
+  dynmap.hide.self:
+    description: Allows /dynmap hide (on self)
+    default: true
+  dynmap.hide.others:
+    description: Allows /dynmap hide <player>
+    default: op
+  dynmap.fullrender:
+    description: Allows /dynmap fullrender or /dynmap fullrender <world>
+    default: op
+  dynmap.radiusrender:
+    description: Allows /dynmap radiusrender
+    default: op
+  dynmap.updaterender:
+    description: Allows /dynmap updaterender
+    default: op
+  dynmap.cancelrender:
+    description: Allows /dynmap cancelrender <world>
+    default: op
+  dynmap.reload:
+    description: Allows /dynmap reload
+    default: op
+  dynmap.stats:
+    description: Allows /dynmap stats, /dynmap stats <world>, or /dynmap triggerstats
+    default: true
+  dynmap.resetstats:
+    description: Allows /dynmap resetstats or /dynmap resetstats <world>
+    default: op
+  dynmap.sendtoweb:
+    description: Allows /dynmap sendtoweb
+    default: op
+  dynmap.purgequeue:
+    description: Allows /dynmap purgequeue
+    default: op
+  dynmap.pause:
+    description: Allows /dynmap pause
+    default: op
+  dynmap.ids-for-ip:
+    description: Allows /dynmap ids-for-ip
+    default: op
+  dynmap.ips-for-id:
+    description: Allows /dynmap ips-for-id
+    default: op
+  dynmap.webregister:
+    description: Allows /dynmap webregister
+    default: true
+  dynmao,webregister.other:
+    description: Allows /dynmap webregister userid
+    default: op
+  dynmap.marker.add:
+    description: Allows /dmarker add
+    default: op
+  dynmap.marker.update:
+    description: Allows /dmarker update
+    default: op
+  dynmap.marker.movehere:
+    description: Allows /dmarker movehere
+    default: op
+  dynmap.marker.delete:
+    description: Allows /dmarker delete
+    default: op
+  dynmap.marker.list:
+    description: Allows /dmarker list
+    default: true
+  dynmap.marker.icons:
+    description: Allows /dmarker icons
+    default: true
+  dynmap.marker.sign:
+    description: Allows creation of markers using signs
+    default: op
+  dynmap.marker.addset:
+    description: Allows /dmarker addset
+    default: op
+  dynmap.marker.updateset:
+    description: Allows /dmarker updateset
+    default: op
+  dynmap.marker.deleteset:
+    description: Allows /dmarker deleteset
+    default: op
+  dynmap.marker.listsets:
+    description: Allows /dmarker listsets
+    default: true
+  dynmap.marker.addicon:
+    description: Allows /dmarker addicon
+    default: op
+  dynmap.marker.updateicon:
+    description: Allows /dmarker updateicon
+    default: op
+  dynmap.marker.deleteicon:
+    description: Allows /dmarker deleteicon
+    default: op
+  dynmap.marker.addarea:
+    description: Allows /dmarker addarea, /dmarker addcorner, /dmarker clearcorners
+    default: op            
+  dynmap.marker.updatearea:
+    description: Allows /dmarker updatearea
+    default: op            
+  dynmap.marker.listareas:
+    description: Allows /dmarker listareas
+    default: op            
+  dynmap.marker.deletearea:
+    description: Allows /dmarker deletearea
+    default: op
+  dynmap.marker.addline:
+    description: Allows /dmarker addline
+    default: op            
+  dynmap.marker.updateline:
+    description: Allows /dmarker updateline
+    default: op            
+  dynmap.marker.listlines:
+    description: Allows /dmarker listlines
+    default: op            
+  dynmap.marker.deleteline:
+    description: Allows /dmarker deleteline
+    default: op
+  dynmap.marker.addcircle:
+    description: Allows /dmarker addcircle
+    default: op            
+  dynmap.marker.updatecircle:
+    description: Allows /dmarker updatecircle
+    default: op            
+  dynmap.marker.listcircles:
+    description: Allows /dmarker listcircles
+    default: op            
+  dynmap.marker.deletecircle:
+    description: Allows /dmarker deletecircle
+    default: op
+  dynmap.dmap.worldlist:
+    description: Allows /dmap worldlist
+    default: op
+  dynmap.dmap.worldset:
+    description: Allows /dmap worldset
+    default: op
+  dynmap.dmap.worldreset:
+    description: Allows /dmap worldreset
+    default: op
+  dynmap.dmap.mapdelete:
+    description: Allows /dmap mapdelete
+    default: op
+  dynmap.dmap.mapset:
+    description: Allows /dmap mapset
+    default: op
+  dynmap.dmap.mapadd:
+    description: Allows /dmap mapadd
+    default: op
+  dynmap.dmap.perspectivelist:
+    description: Allows /dmap perspectivelist
+    default: op
+  dynmap.dmap.shaderlist:
+    description: Allows /dmap shaderlist
+    default: op
+  dynmap.dmap.lightinglist:
+    description: Allows /dmap lightinglist
+    default: op
+  dynmap.webchat:
+    description: Allows web chat (if login required for webchat)
+    default: true
+  dynmap.playermarkers.seeall:
+    description: Allow all players to be seen by user on web UI
+    default: op
