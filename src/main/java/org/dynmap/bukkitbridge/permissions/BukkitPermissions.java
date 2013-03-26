@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.dynmap.bukkitbridge.DynmapCBBridgePlugin;
 import org.dynmap.permissions.PermissionsHandler;
 
-public class BukkitPermissions implements PermissionsHandler {
+public class BukkitPermissions extends PermissionsHandler {
     private static final String PREFIX = "dynmap.";
     public static BukkitPermissions create() {
         try {

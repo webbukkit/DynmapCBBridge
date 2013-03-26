@@ -14,7 +14,7 @@ import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
-public class PEXPermissions implements PermissionsHandler {
+public class PEXPermissions extends PermissionsHandler {
     private static final String PREFIX = "dynmap.";
     private PermissionManager pm;
 

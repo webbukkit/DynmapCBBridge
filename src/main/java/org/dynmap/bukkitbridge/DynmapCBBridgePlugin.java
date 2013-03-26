@@ -28,7 +28,7 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
             PermissionsHandler ph = PEXPermissions.create();
             if (ph == null)
                 ph = BukkitPermissions.create();
-            PermissionsHandler.handler = ph;
+            PermissionsHandler.setHandler(ph);
             
             if(enabled) {
                 getServer().getPluginManager().callEvent(new PluginDisableEvent(DynmapCBBridgePlugin.this));
