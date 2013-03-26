@@ -38,16 +38,11 @@ public class PEXPermissions extends PermissionsHandler {
     @Override
     public boolean hasPermission(String username, String perm) {
         Player player = Bukkit.getServer().getPlayerExact(username);
-        if (player == null) {
-            Set<OfflinePlayer> ops = Bukkit.getServer().getOperators();
-            for(OfflinePlayer op : ops) {
-                if(op.getName().equalsIgnoreCase(username)) {
-                    return true;
-                }
-            }
-            return false;
+        boolean rslt = false;
+        if (player != null) {
+            rslt = (!player.isBanned()) && player.hasPermission(PREFIX + perm);
         }
-        return (!player.isBanned()) && player.hasPermission(PREFIX + perm);
+        return rslt;
     }
     
     @Override
@@ -66,9 +61,10 @@ public class PEXPermissions extends PermissionsHandler {
     @Override
     public boolean hasOfflinePermission(String player, String perm) {
         PermissionUser pu = pm.getUser(player);
+        boolean rslt = false;
         if(pu != null) {
-            return pu.has(PREFIX + perm);
+            rslt = pu.has(PREFIX + perm);
         }
-        return false;
+        return rslt;
     }
 }
