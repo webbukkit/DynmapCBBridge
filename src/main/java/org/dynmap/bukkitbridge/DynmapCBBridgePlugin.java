@@ -1,6 +1,8 @@
 package org.dynmap.bukkitbridge;
 
 
+import java.util.logging.Logger;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.server.PluginDisableEvent;
@@ -10,15 +12,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
 import org.dynmap.DynmapCommonAPI;
 import org.dynmap.DynmapCommonAPIListener;
+import org.dynmap.bukkitbridge.permissions.BukkitPermissions;
+import org.dynmap.bukkitbridge.permissions.PEXPermissions;
 import org.dynmap.markers.MarkerAPI;
+import org.dynmap.permissions.PermissionsHandler;
 
 public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
+    public static Logger log;
     private DynmapCommonAPI commonapi;
     private boolean enabled;
     private class OurAPIListener extends DynmapCommonAPIListener {
         @Override
         public void apiEnabled(DynmapCommonAPI api) {
             commonapi = api;
+            PermissionsHandler ph = PEXPermissions.create();
+            if (ph == null)
+                ph = BukkitPermissions.create();
+            PermissionsHandler.handler = ph;
+            
             if(enabled) {
                 getServer().getPluginManager().callEvent(new PluginDisableEvent(DynmapCBBridgePlugin.this));
                 getServer().getPluginManager().callEvent(new PluginEnableEvent(DynmapCBBridgePlugin.this));
@@ -33,7 +44,8 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
     
     @Override
     public void onLoad() {
-        this.getLogger().info("Dynmap CraftBukkit-to_Forge Bridge, version " + this.getDescription().getVersion());
+        log = this.getLogger();
+        log.info("Dynmap CraftBukkit-to_Forge Bridge, version " + this.getDescription().getVersion());
         DynmapCommonAPIListener.register(apilisten);
     }
     
@@ -45,7 +57,7 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
     @Override
     public void onEnable() {
         enabled = true;
-        this.getLogger().info("DynmapCBBridge enabled");
+        log.info("DynmapCBBridge enabled");
     }
     
     @Override
