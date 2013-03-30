@@ -2,7 +2,7 @@ name: dynmap
 main: org.dynmap.bukkitbridge.DynmapCBBridgePlugin
 version: "${project.version}-${BUILD_NUMBER}"
 authors: [mikeprimm]
-softdepend: [ Permissions, PermissionEx, bPermissions, PermissionsBukkit ]
+softdepend: [ Permissions, PermissionEx, bPermissions, PermissionsBukkit, Dynmap ]
            
 permissions:
   dynmap.*:
