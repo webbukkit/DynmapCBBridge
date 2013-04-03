@@ -29,11 +29,6 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
             if (ph == null)
                 ph = BukkitPermissions.create();
             PermissionsHandler.setHandler(ph);
-            
-            if(enabled) {
-                getServer().getPluginManager().callEvent(new PluginDisableEvent(DynmapCBBridgePlugin.this));
-                getServer().getPluginManager().callEvent(new PluginEnableEvent(DynmapCBBridgePlugin.this));
-            }
         }
         @Override
         public void apiDisabled(DynmapCommonAPI api) {
@@ -45,8 +40,6 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
     @Override
     public void onLoad() {
         log = this.getLogger();
-        log.info("Dynmap CraftBukkit-to_Forge Bridge, version " + this.getDescription().getVersion());
-        DynmapCommonAPIListener.register(apilisten);
     }
     
     @Override
@@ -56,6 +49,8 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
 
     @Override
     public void onEnable() {
+        log.info("Dynmap CraftBukkit-to_Forge Bridge, version " + this.getDescription().getVersion());
+        DynmapCommonAPIListener.register(apilisten);
         enabled = true;
         log.info("DynmapCBBridge enabled");
     }
