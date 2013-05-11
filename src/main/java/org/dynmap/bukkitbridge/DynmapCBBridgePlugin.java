@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
@@ -20,7 +18,6 @@ import org.dynmap.permissions.PermissionsHandler;
 public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
     public static Logger log;
     private DynmapCommonAPI commonapi;
-    private boolean enabled;
     private class OurAPIListener extends DynmapCommonAPIListener {
         @Override
         public void apiEnabled(DynmapCommonAPI api) {
@@ -44,14 +41,12 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
     
     @Override
     public void onDisable() {
-        enabled = false;
     }
 
     @Override
     public void onEnable() {
         log.info("Dynmap CraftBukkit-to_Forge Bridge, version " + this.getDescription().getVersion());
         DynmapCommonAPIListener.register(apilisten);
-        enabled = true;
         log.info("DynmapCBBridge enabled");
     }
     

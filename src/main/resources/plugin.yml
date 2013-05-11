@@ -227,3 +227,13 @@ permissions:
   dynmap.playermarkers.seeall:
     description: Allow all players to be seen by user on web UI
     default: op
+  org.dynmap.forge.DynmapCommand:
+    description: Allows use of /dynmap (matches default perm for MCPC-Plus)
+    default: true
+  org.dynmap.forge.DmapCommand:
+    description: Allows use of /dmap (matches default perm for MCPC-Plus)
+    default: true
+  org.dynmap.forge.DmarkerCommand:
+    description: Allows use of /dmarker (matches default perm for MCPC-Plus)
+    default: true
+  
