@@ -49,6 +49,9 @@ permissions:
       dynmap.marker.updatecircle: true
       dynmap.marker.listcircles: true
       dynmap.marker.deletecircle: true
+      dynmap.marker.getdesc: true
+      dynmap.marker.resetdesc: true
+      dynmap.marker.appenddesc: true
       dynmap.dmap.worldlist: true
       dynmap.dmap.worldset: true
       dynmap.dmap.worldreset: true
@@ -193,6 +196,15 @@ permissions:
     default: op            
   dynmap.marker.deletecircle:
     description: Allows /dmarker deletecircle
+    default: op
+  dynmap.marker.getdesc:
+    description: Allows /dmarker getdesc
+    default: op
+  dynmap.marker.resetdesc:
+    description: Allows /dmarker resetdesc
+    default: op
+  dynmap.marker.appenddesc:
+    description: Allows /dmarker appenddesc
     default: op
   dynmap.dmap.worldlist:
     description: Allows /dmap worldlist
