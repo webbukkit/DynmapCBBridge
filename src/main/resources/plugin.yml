@@ -52,6 +52,9 @@ permissions:
       dynmap.marker.getdesc: true
       dynmap.marker.resetdesc: true
       dynmap.marker.appenddesc: true
+      dynmap.marker.importdesc: true
+      dynmap.marker.getlabel: true
+      dynmap.marker.importlabel: true
       dynmap.dmap.worldlist: true
       dynmap.dmap.worldset: true
       dynmap.dmap.worldreset: true
@@ -205,6 +208,15 @@ permissions:
     default: op
   dynmap.marker.appenddesc:
     description: Allows /dmarker appenddesc
+    default: op
+  dynmap.marker.importdesc:
+    description: Allows /dmarker importdesc
+    default: op
+  dynmap.marker.getlabel:
+    description: Allows /dmarker getlabel
+    default: op
+  dynmap.marker.importlabel:
+    description: Allows /dmarker importlabel
     default: op
   dynmap.dmap.worldlist:
     description: Allows /dmap worldlist
