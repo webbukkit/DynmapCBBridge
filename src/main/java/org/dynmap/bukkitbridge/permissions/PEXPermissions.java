@@ -44,7 +44,17 @@ public class PEXPermissions extends PermissionsHandler {
         }
         return rslt;
     }
-    
+
+    @Override
+    public boolean hasPermissionNode(String username, String perm) {
+        Player player = Bukkit.getServer().getPlayerExact(username);
+        boolean rslt = false;
+        if (player != null) {
+            rslt = (!player.isBanned()) && player.hasPermission(perm);
+        }
+        return rslt;
+    }
+
     @Override
     public Set<String> hasOfflinePermissions(String player, Set<String> perms) {
         HashSet<String> hasperms = new HashSet<String>();

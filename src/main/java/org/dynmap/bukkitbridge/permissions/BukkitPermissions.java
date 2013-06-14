@@ -34,6 +34,14 @@ public class BukkitPermissions extends PermissionsHandler {
         return (!player.isBanned()) && player.hasPermission(PREFIX + perm);
     }
     @Override
+    public boolean hasPermissionNode(String username, String perm) {
+        Player player = Bukkit.getServer().getPlayerExact(username);
+        if (player == null) {
+            return false;
+        }
+        return (!player.isBanned()) && player.hasPermission(perm);
+    }
+    @Override
     public Set<String> hasOfflinePermissions(String player, Set<String> perms) {
         Player p = Bukkit.getPlayerExact(player);
         if (p == null) {

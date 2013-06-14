@@ -11,6 +11,7 @@ import org.dynmap.DynmapAPI;
 import org.dynmap.DynmapCommonAPI;
 import org.dynmap.DynmapCommonAPIListener;
 import org.dynmap.bukkitbridge.permissions.BukkitPermissions;
+import org.dynmap.bukkitbridge.permissions.GroupManagerPermissions;
 import org.dynmap.bukkitbridge.permissions.PEXPermissions;
 import org.dynmap.markers.MarkerAPI;
 import org.dynmap.permissions.PermissionsHandler;
@@ -23,6 +24,8 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
         public void apiEnabled(DynmapCommonAPI api) {
             commonapi = api;
             PermissionsHandler ph = PEXPermissions.create();
+            if (ph == null)
+                ph = GroupManagerPermissions.create();
             if (ph == null)
                 ph = BukkitPermissions.create();
             PermissionsHandler.setHandler(ph);
