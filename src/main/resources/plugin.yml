@@ -2,7 +2,7 @@ name: dynmap
 main: org.dynmap.bukkitbridge.DynmapCBBridgePlugin
 version: "${project.version}-${BUILD_NUMBER}"
 authors: [mikeprimm]
-softdepend: [ Permissions, PermissionEx, bPermissions, PermissionsBukkit, Dynmap ]
+softdepend: [ Permissions, PermissionEx, bPermissions, PermissionsBukkit, GroupManager, Dynmap ]
            
 permissions:
   dynmap.*:
@@ -22,6 +22,8 @@ permissions:
       dynmap.resetstats: true
       dynmap.sendtoweb: true
       dynmap.purgequeue: true
+      dynmap.purgemap: true
+      dynmap.purgeworld: true
       dynmap.ids-for-ip: true
       dynmap.ips-for-id: true
       dynmap.webregister: true
@@ -106,6 +108,12 @@ permissions:
     default: op
   dynmap.purgequeue:
     description: Allows /dynmap purgequeue
+    default: op
+  dynmap.purgemap:
+    description: Allows /dynmap purgemap
+    default: op
+  dynmap.purgeworld:
+    description: Allows /dynmap purgeworld
     default: op
   dynmap.pause:
     description: Allows /dynmap pause

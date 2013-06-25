@@ -122,7 +122,9 @@
   </dependencies>
   <artifactId>DynmapCBBridge</artifactId>
   <properties>
-  	<BUILD_NUMBER>Dev</BUILD_NUMBER>
-  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	   	<timestamp>${maven.build.timestamp}</timestamp>
+   		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>	
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<BUILD_NUMBER>Dev${timestamp}</BUILD_NUMBER>
   </properties>
 </project>
