@@ -15,7 +15,6 @@ import org.dynmap.permissions.PermissionsHandler;
 public class GroupManagerPermissions extends PermissionsHandler  {
     private static final String PREFIX = "dynmap.";
     GroupManager gm;
-    WorldsHolder wh;
 
     public static GroupManagerPermissions create() {
         Server server = Bukkit.getServer();
@@ -31,13 +30,12 @@ public class GroupManagerPermissions extends PermissionsHandler  {
 
     public GroupManagerPermissions(Plugin permissionsPlugin) {
         gm = (GroupManager)permissionsPlugin;
-        wh = gm.getWorldsHolder();
     }
     
     @Override
     public Set<String> hasOfflinePermissions(String player, Set<String> perms) {
         HashSet<String> hasperms = new HashSet<String>();
-        AnjoPermissionsHandler apm = wh.getWorldPermissionsByPlayerName(player);
+        AnjoPermissionsHandler apm = gm.getWorldsHolder().getDefaultWorld().getPermissionsHandler();
         if (apm != null) {
             for (String pp : perms) {
                 if (apm.permission(player, PREFIX + pp)) {
@@ -49,7 +47,7 @@ public class GroupManagerPermissions extends PermissionsHandler  {
     }
     @Override
     public boolean hasOfflinePermission(String player, String perm) {
-        AnjoPermissionsHandler apm = wh.getWorldPermissionsByPlayerName(player);
+        AnjoPermissionsHandler apm = gm.getWorldsHolder().getDefaultWorld().getPermissionsHandler();
         if(apm != null) {
             return apm.permission(player, PREFIX + perm);
         }
@@ -58,7 +56,7 @@ public class GroupManagerPermissions extends PermissionsHandler  {
 
     @Override
     public boolean hasPermission(String player, String perm) {
-        AnjoPermissionsHandler apm = wh.getWorldPermissionsByPlayerName(player);
+        AnjoPermissionsHandler apm = gm.getWorldsHolder().getDefaultWorld().getPermissionsHandler();
         if(apm != null) {
             return apm.permission(player, PREFIX + perm);
         }
@@ -67,7 +65,7 @@ public class GroupManagerPermissions extends PermissionsHandler  {
 
     @Override
     public boolean hasPermissionNode(String player, String perm) {
-        AnjoPermissionsHandler apm = wh.getWorldPermissionsByPlayerName(player);
+        AnjoPermissionsHandler apm = gm.getWorldsHolder().getDefaultWorld().getPermissionsHandler();
         if(apm != null) {
             return apm.permission(player, perm);
         }
