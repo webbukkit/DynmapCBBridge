@@ -25,8 +25,6 @@ public class PEXPermissions extends PermissionsHandler {
         Bukkit.getPluginManager().enablePlugin(permissionsPlugin);
         if(permissionsPlugin.isEnabled() == false)
             return null;
-        if(PermissionsEx.isAvailable() == false)
-            return null;
         DynmapCBBridgePlugin.log.info("Using PermissionsEx " + permissionsPlugin.getDescription().getVersion() + " for access control");
         return new PEXPermissions();
     }
