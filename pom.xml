@@ -126,5 +126,5 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<BUILD_NUMBER>Dev${timestamp}</BUILD_NUMBER>
   </properties>
-  <version>1.9.1</version>
+  <version>1.9.2</version>
 </project>
