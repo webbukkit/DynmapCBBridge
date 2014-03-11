@@ -5,6 +5,12 @@ import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
@@ -19,6 +25,8 @@ import org.dynmap.permissions.PermissionsHandler;
 public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
     public static Logger log;
     private DynmapCommonAPI commonapi;
+    private boolean disableChatHandling = false;
+    private boolean wasDisabled = false;
     private class OurAPIListener extends DynmapCommonAPIListener {
         @Override
         public void apiEnabled(DynmapCommonAPI api) {
@@ -29,6 +37,7 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
             if (ph == null)
                 ph = BukkitPermissions.create();
             PermissionsHandler.setHandler(ph);
+            wasDisabled = commonapi.setDisableChatToWebProcessing(true);
         }
         @Override
         public void apiDisabled(DynmapCommonAPI api) {
@@ -44,12 +53,51 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
     
     @Override
     public void onDisable() {
+        if ((commonapi != null) && (!wasDisabled)) {
+            commonapi.setDisableChatToWebProcessing(false);
+        }
     }
 
     @Override
     public void onEnable() {
         log.info("Dynmap CraftBukkit-to_Forge Bridge, version " + this.getDescription().getVersion());
         DynmapCommonAPIListener.register(apilisten);
+        
+        this.getServer().getPluginManager().registerEvents(new Listener() {
+            @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+            public void onPlayerChat(AsyncPlayerChatEvent evt) {
+                final Player p = evt.getPlayer();
+                final String msg = evt.getMessage();
+                getServer().getScheduler().scheduleSyncDelayedTask(DynmapCBBridgePlugin.this, new Runnable() {
+                    public void run() {
+                        if ((commonapi != null) && (!disableChatHandling)) {
+                            commonapi.postPlayerMessageToWeb(p.getName(), p.getDisplayName(), msg);
+                        }
+                    }
+                });
+            }
+            @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+            public void onPlayerJoin(PlayerJoinEvent evt) {
+                final Player p = evt.getPlayer();
+                // Give other handlers a change to prep player (nicknames and such from Essentials)
+                getServer().getScheduler().scheduleSyncDelayedTask(DynmapCBBridgePlugin.this, new Runnable() {
+                    @Override
+                    public void run() {
+                        if ((commonapi != null) && (!disableChatHandling)) {
+                            commonapi.postPlayerJoinQuitToWeb(p.getName(), p.getDisplayName(), true);
+                        }
+                    }
+                }, 2);
+            }
+            @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+            public void onPlayerQuit(PlayerQuitEvent evt) {
+                Player p = evt.getPlayer();
+                if ((commonapi != null) && (!disableChatHandling)) {
+                    commonapi.postPlayerJoinQuitToWeb(p.getName(), p.getDisplayName(), false);
+                }
+            }
+         }, this);
+
         log.info("DynmapCBBridge enabled");
     }
     
@@ -188,10 +236,9 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
 
     @Override
     public boolean setDisableChatToWebProcessing(boolean disable) {
-        if (commonapi == null)
-            return false;
-        else
-            return commonapi.setDisableChatToWebProcessing(disable);
+        boolean prev = disableChatHandling;
+        disableChatHandling = disable;
+        return prev;
     }
 
     @Override
