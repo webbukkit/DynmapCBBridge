@@ -4,10 +4,12 @@ package org.dynmap.bukkitbridge;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -94,6 +96,18 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
                 Player p = evt.getPlayer();
                 if ((commonapi != null) && (!disableChatHandling)) {
                     commonapi.postPlayerJoinQuitToWeb(p.getName(), p.getDisplayName(), false);
+                }
+            }
+            @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+            public void onSignChange(SignChangeEvent evt) {
+                if (commonapi != null) {
+                    Block b = evt.getBlock();
+                    Location l = b.getLocation();
+                    String[] lines = evt.getLines();    /* Note: changes to this change event - intentional */
+                    Player p = evt.getPlayer();
+                    String pid = null;
+                    if (p != null) pid = p.getName();
+                    commonapi.processSignChange(b.getType().getId(), l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ(), lines, pid);
                 }
             }
          }, this);
@@ -310,6 +324,13 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
             Plugin plugin) {
         if(commonapi == null) return;
         commonapi.assertPlayerVisibility(player.getName(), is_visible, plugin.getDescription().getName());
+    }
+
+    @Override
+    public void processSignChange(int blkid, String world, int x, int y,
+            int z, String[] lines, String playerid) {
+        if(commonapi == null) return;
+        commonapi.processSignChange(blkid, world, x, y, z, lines, playerid);
     }
 
 }
