@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
 import org.dynmap.DynmapCommonAPI;
 import org.dynmap.DynmapCommonAPIListener;
+import org.dynmap.DynmapWebChatEvent;
 import org.dynmap.bukkitbridge.permissions.BukkitPermissions;
 import org.dynmap.bukkitbridge.permissions.GroupManagerPermissions;
 import org.dynmap.bukkitbridge.permissions.PEXPermissions;
@@ -44,6 +45,12 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
         @Override
         public void apiDisabled(DynmapCommonAPI api) {
             commonapi = null;
+        }
+        @Override
+        public boolean webChatEvent(String src, String name, String msg) {
+            DynmapWebChatEvent evt = new DynmapWebChatEvent(src, name, msg);
+            getServer().getPluginManager().callEvent(evt);
+            return ((evt.isCancelled() == false) && (evt.isProcessed() == false));
         }
     }
     private OurAPIListener apilisten = new OurAPIListener();
