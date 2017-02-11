@@ -94,5 +94,5 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<BUILD_NUMBER>Dev${timestamp}</BUILD_NUMBER>
   </properties>
-  <version>2.4-SNAPSHOT</version>
+  <version>2.4</version>
 </project>
