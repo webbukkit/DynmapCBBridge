@@ -1,8 +1,132 @@
 name: dynmap
 main: org.dynmap.bukkitbridge.DynmapCBBridgePlugin
 version: "${project.version}-${BUILD_NUMBER}"
+api-version: 1.13
 authors: [mikeprimm]
-softdepend: [ Permissions, PermissionEx, bPermissions, PermissionsBukkit, GroupManager, Dynmap ]
+website: "https://www.reddit.com/r/Dynmap/"
+softdepend: [ Permissions, PermissionEx, bPermissions, PermissionsBukkit, GroupManager, LuckPerms, Vault, SkinsRestorer ]
+commands:
+  dynmap:
+    description: Controls Dynmap.
+    usage: |
+           /<command> hide - hides the player from the map.
+           /<command> hide TheDude - hides the player 'TheDude' on the map.
+           /<command> show - shows the player on the map.
+           /<command> show TheDude - shows the player 'TheDude' on the map.
+           /<command> render - Renders the tile at your location.
+           /<command> fullrender - Render all maps for entire world from your location.
+           /<command> fullrender world - Render all maps for entire world 'world'.
+           /<command> fullrender world:mapname - Render map 'mapname' of world 'world'.
+           /<command> radiusrender ## - Render at least ## block radius from your location on all maps.
+           /<command> radiusrender ## mapname - Render at least ## block radius from your location on map 'mapname'
+           /<command> radiusrender worldname x z ## - Render at least ## block radius from location x,z on world 'worldname'
+           /<command> radiusrender worldname x z ## mapname - Render at least ## block radius from location x,z on world 'worldname' on map 'mapname'
+           /<command> updaterender - Render updates starting at your location on all maps.
+           /<command> updaterender mapname - Render updates starting at your location on give map
+           /<command> updaterender worldname x z mapname - Render updates starting at location x,z on world 'worldname' for given map
+           /<command> cancelrender - Cancels any active renders on current world
+           /<command> cancelrender world - Cancels any active renders of world 'world'
+           /<command> stats - Show render statistics.
+           /<command> triggerstats - Show render trigger statistics
+           /<command> resetstats - Reset render statistics.
+           /<command> sendtoweb msg - Send message to web users
+           /<command> purgequeue - Set tile update queue to empty
+           /<command> purgequeue worldname - Set tile update queue to empty for world 'worldname'
+           /<command> purgemap worldname mapname - Delete all the tiles for map 'mapname' of world 'worldname'
+           /<command> purgeworld worldname - Delete all the files for world 'worldname'
+           /<command> pause - Show render pause state
+           /<command> pause <all|none|full|update> - Set render pause state
+           /<command> quiet - Stop progress messages from active jobs
+           /<command> ids-for-ip <ipaddress> - Show player IDs that have logged in from given IP address
+           /<command> ips-for-id <playerid> - Show IP addresses that have been used for the given player ID
+           /<command> add-id-for-ip <playerid> <ipaddress> - Add player ID to given IP address
+           /<command> del-id-for-ip <playerid> <ipaddress> - Delete player ID from given IP address
+           /<command> webregister - Start registration process for creating web login account
+                       
+  dmarker:
+    description: Manipulate map markers
+    usage: |
+           /<command> add <label> - add new marker with given label at current location (use double-quotes if spaces needed)
+           /<command> add id:<id> <label> - add new marker with given ID at current location (use double-quotes if spaces needed)
+           /<command> movehere <label> - move marker with given label to current location
+           /<command> movehere id:<id> - move marker with given ID to current location
+           /<command> update <label> icon:<icon> newlabel:<newlabel>- update marker with given ID with new label and/or icon
+           /<command> delete <label> - delete marker with given label
+           /<command> delete id:<id> - delete marker with given ID
+           /<command> list - list details of all markers
+           /<command> icons - list details of all icons
+           /<command> addset <label> - add marker set with given label (ID=label)
+           /<command> addset id:<id> <label> - add marker set with given ID and label
+           /<command> updateset id:<id> newlabel:<label> - update marker set with given ID
+           /<command> updateset <label> newlabel:<label> - update marker set with given label
+           /<command> deleteset <label> - delete marker set with given label
+           /<command> deleteset id:<id> - delete marker set with given ID
+           /<command> listsets - list all marker sets
+           /<command> addicon id:<id> <label> file:"filename" - install new icon
+           /<command> updateicon id:<id> newlabel:<label> file:"filename" - update existing icon
+           /<command> updateicon <label> newlabel:<label> file:"filename" - update existing icon
+           /<command> deleteicon id:<id> - remove icon 
+           /<command> deleteicon <label> - remove icon 
+           /<command> addcorner - add corner to corner list using current location
+           /<command> addcorner <x> <y> <z> <world> - add corner with given x, y and z coordinate on given world to corner list
+           /<command> clearcorners - clear corner list
+           /<command> addarea <label> - add new area with given label using corner list
+           /<command> addarea id:<id> <label> - add new area with given ID using corner list
+           /<command> deletearea <label> - delete area with given label
+           /<command> deletearea id:<id> <label> - delete area with given ID
+           /<command> listareas - list details of all areas
+           /<command> updatearea <label> <arg>:<value> ... - update attributes of area with given label
+           /<command> updatearea id:<id> <arg>:<value> ... - update attributes of area with given ID
+           /<command> addline <label> - add new poly-line with given label using corner list
+           /<command> addline id:<id> <label> - add new poly-line with given ID using corner list
+           /<command> deleteline <label> - delete poly-line with given label
+           /<command> deleteline id:<id> <label> - delete poly-line with given ID
+           /<command> listlines - list details of all poly-lines
+           /<command> updateline <label> <arg>:<value> ... - update attributes of poly-line with given label
+           /<command> updateline id:<id> <arg>:<value> ... - update attributes of poly-line with given ID
+           /<command> addcircle <label> radius:<rad> - add new circle centered at current location with given radius and label
+           /<command> addcircle id:<id> <label> radius:<rad> - add new circle centered at current location with given radius and ID
+           /<command> addcircle <label> radius:<rad> x:<x> y:<y> z:<z> world:<world> - add new circle centered at given coordinates with given radius and label
+           /<command> deletecircle <label> - delete circle with given label
+           /<command> deletecircle id:<id> <label> - delete circle with given ID
+           /<command> listcircles - list details of all circles
+           /<command> updatecircle <label> <arg>:<value> ... - update attributes of circle with given label
+           /<command> updatecircle id:<id> <arg>:<value> ... - update attributes of circle with given ID
+           /<command> getdesc id:<id> type:<icon|area|circle|line> - get description for marker with given ID
+           /<command> getdesc <label> type:<icon|area|circle|line> - get description for marker with given label
+           /<command> resetdesc id:<id> type:<icon|area|circle|line> - clear description for marker with given ID
+           /<command> resetdesc <label> type:<icon|area|circle|line> - clear description for marker with given label
+           /<command> appenddesc id:<id> type:<icon|area|circle|line> desc:"text" - append text line to description for marker with given ID
+           /<command> appenddesc <label> type:<icon|area|circle|line> desc:"text" - append text line to description for marker with given label
+           /<command> importdesc id:<id> type:<icon|area|circle|line> file:<filename> - import description from given file for marker with given ID
+           /<command> importdesc <label> type:<icon|area|circle|line> file:<filename> - import description from given file for marker with given label
+           /<command> importlabel id:<id> type:<icon|area|circle|line> file:<filename> - import label with markup from given file for marker with given ID
+           /<command> importlabel <label> type:<icon|area|circle|line> file:<filename> - import label with markup from given file for marker with given label
+           /<command> getlabel id:<id> type:<icon|area|circle|line> - get label for marker with given ID
+           
+  dmap:
+    description: List and modify dynmap configuration
+    usage: |
+           /<command> worldlist - list all worlds configured (enabled or disabled)
+           /<command> worldset worldname enabled:<true|false> - enable or disable a world
+           /<command> worldset worldname center:<x/y/z|here|default> - set map center for given world
+           /<command> worldset worldname extrazoomout:<N> - set extra zoom out levels for given world
+           /<command> maplist worldname - list all maps for given world
+           /<command> mapdelete worldname:mapname - delete given map of given world
+           /<command> mapadd worldname:mapname attrib:value attrib:value - create map on given world with given attributes
+           /<command> mapset worldname:mapname attrib:value attrib:value - update given map on given world with given attributes
+           /<command> worldreset worldname - reset given world to default template for world type
+           /<command> worldreset worldname templatename - reset given world to given template
+           /<command> worldgetlimits worldname - list visibility and hidden limits for world
+           /<command> worldaddlimit worldname type:rect corner1:<x>/<z> corner2:<x|z> - Add rectangular visibility limit
+           /<command> worldaddlimit worldname type:round center:<x>/<z> radius:<radius> - Add circular visibility limit
+           /<command> worldaddlimit worldname limittype:hidden type:rect corner1:<x>/<z> corner2:<x|z> - Add rectangular hidden limit
+           /<command> worldaddlimit worldname limittype:hidden type:round center:<x>/<z> radius:<radius> - Add circular hidden limit
+           /<command> worldremovelimit worldname <limit-index> - Remove limit with index <limit-index>
+  dynmapexp:
+    description: Map export commands
+    usage: |
+           /<command> shader <shadername> - Export material library for shader <shadername>
            
 permissions:
   dynmap.*:
@@ -24,6 +148,7 @@ permissions:
       dynmap.purgequeue: true
       dynmap.purgemap: true
       dynmap.purgeworld: true
+      dynmap.quiet: true
       dynmap.ids-for-ip: true
       dynmap.ips-for-id: true
       dynmap.webregister: true
@@ -118,6 +243,9 @@ permissions:
   dynmap.pause:
     description: Allows /dynmap pause
     default: op
+  dynmap.quiet:
+    description: Allows /dynmap quiet
+    default: true
   dynmap.ids-for-ip:
     description: Allows /dynmap ids-for-ip
     default: op
@@ -127,7 +255,7 @@ permissions:
   dynmap.webregister:
     description: Allows /dynmap webregister
     default: true
-  dynmao,webregister.other:
+  dynmap.webregister.other:
     description: Allows /dynmap webregister userid
     default: op
   dynmap.marker.add:
@@ -259,13 +387,3 @@ permissions:
   dynmap.playermarkers.seeall:
     description: Allow all players to be seen by user on web UI
     default: op
-  org.dynmap.forge.DynmapCommand:
-    description: Allows use of /dynmap (matches default perm for MCPC-Plus)
-    default: true
-  org.dynmap.forge.DmapCommand:
-    description: Allows use of /dmap (matches default perm for MCPC-Plus)
-    default: true
-  org.dynmap.forge.DmarkerCommand:
-    description: Allows use of /dmarker (matches default perm for MCPC-Plus)
-    default: true
-  

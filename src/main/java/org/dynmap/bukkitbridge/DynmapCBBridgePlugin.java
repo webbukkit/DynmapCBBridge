@@ -113,8 +113,8 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
                     String[] lines = evt.getLines();    /* Note: changes to this change event - intentional */
                     Player p = evt.getPlayer();
                     String pid = null;
-                    if (p != null) pid = p.getName();
-                    commonapi.processSignChange(b.getType().getId(), l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ(), lines, pid);
+                    if (p != null) pid = p.getName();                    
+                    commonapi.processSignChange(b.getType().name(), l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ(), lines, pid);
                 }
             }
          }, this);
@@ -333,11 +333,10 @@ public class DynmapCBBridgePlugin extends JavaPlugin implements DynmapAPI {
         commonapi.assertPlayerVisibility(player.getName(), is_visible, plugin.getDescription().getName());
     }
 
-    @Override
-    public void processSignChange(int blkid, String world, int x, int y,
-            int z, String[] lines, String playerid) {
+	@Override
+    public void processSignChange(String material, String world, int x, int y, int z, String[] lines, String playerid) {
         if(commonapi == null) return;
-        commonapi.processSignChange(blkid, world, x, y, z, lines, playerid);
-    }
+        commonapi.processSignChange(material, world, x, y, z, lines, playerid);
+	}
 
 }
